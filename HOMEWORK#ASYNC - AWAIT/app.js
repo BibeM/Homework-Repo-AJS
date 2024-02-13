@@ -33,7 +33,7 @@ const fetchStudents = async () => {
     printOldestYoungestStudent(data);
     printLongLastNames(data);
     printTenBestStudents(data);
-
+    printBadAndAdultStudents(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -116,4 +116,19 @@ const printLongLastNames = (students) => {
 const printTenBestStudents = (students) => {
   const newStudents = [...students];
   console.log(newStudents);
+  document.querySelector(".top-ten").innerHTML = newStudents
+    .sort((a, b) => b.averageGrade - a.averageGrade)
+    .slice(0, 10)
+    .map((student) => `<li>${student.firstName} ${student.lastName}<li/>`)
+    .join("");
+};
+const printBadAndAdultStudents = (students) => {
+  document.querySelector(
+    ".fifth"
+  ).innerHTML = `Do some of students have average grade of 1? ${
+    students.some((student) => student.averageGrade === 1) ? "YES" : "NO"
+  }<br>
+  Are all students adults? ${
+    students.every((student) => student.age > 18) ? "YES" : "NO"
+  }`;
 };
